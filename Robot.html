@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robot</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script> window.FontAwesomeConfig = { autoReplaceSvg: 'nest'};</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="Robot.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50">
+    <div id="main-container" class="max-w-md mx-auto bg-white min-h-screen">
+        <header id="header" class="bg-white border-b border-gray-200 sticky top-0 z-10">
+            <div class="px-4 py-3 flex items-center justify-between">
+                <h1 class="text-lg font-semibold text-gray-900">Robot</h1>
+                <button id="activity-log-button" class="text-blue-500 text-base">
+                    <i class="fa-solid fa-chart-line"></i>
+                </button>
+            </div>
+        </header>
+
+        <main id="main-content" class="pb-24">
+            <section id="robot-status-section" class="px-4 pt-6 pb-4">
+                <div id="robot-status-card" class="bg-white rounded-2xl border border-gray-200 p-5 shadow-sm">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center">
+                                <i class="fa-solid fa-robot text-white text-xl"></i>
+                            </div>
+                            <div>
+                                <h2 class="text-base font-semibold text-gray-900">Tank Robot v2</h2>
+                                <div class="flex items-center space-x-1 mt-0.5">
+                                    <div class="w-2 h-2 bg-red-500 rounded-full"></div>
+                                    <span class="text-sm font-medium text-red-600">Stopped</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-right text-xs text-gray-500">
+                            <div>Battery: 78%</div>
+                            <div>API: $0.15</div>
+                        </div>
+                    </div>
+                    <div class="space-y-3">
+                        <button id="start-robot-button" class="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-semibold py-4 rounded-xl flex items-center justify-center space-x-2 transition-all shadow-sm active:scale-98">
+                            <i class="fa-solid fa-play"></i>
+                            <span>Start Robot</span>
+                        </button>
+                        <div class="grid grid-cols-2 gap-2">
+                            <button id="pause-button" class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-3 rounded-xl flex items-center justify-center space-x-2 transition-colors opacity-50 cursor-not-allowed" disabled>
+                                <i class="fa-solid fa-pause"></i>
+                                <span>Pause</span>
+                            </button>
+                            <button id="emergency-stop-button" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-3 rounded-xl flex items-center justify-center space-x-2 transition-colors">
+                                <i class="fa-solid fa-hand"></i>
+                                <span>Stop</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="system-instructions-section" class="px-4 pb-4">
+                <h3 class="text-base font-semibold text-gray-900 mb-3">System Instructions</h3>
+                <div class="bg-white rounded-2xl border border-gray-200 p-4 shadow-sm">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-sm font-medium text-gray-700">Robot Behavior</span>
+                        <button id="templates-button" class="text-xs text-blue-500 font-medium">
+                            <i class="fa-solid fa-template"></i> Templates
+                        </button>
+                    </div>
+                    <textarea id="system-instructions" class="w-full h-24 text-sm border border-gray-200 rounded-xl p-3 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="You are an autonomous explorer robot. Your goal is to safely navigate and document the environment. Rules: Use distance sensor to avoid obstacles, call avoid_obstacle Skill if object <200mm, respond to voice commands...">You are an autonomous explorer robot. Your goal is to safely navigate and document the environment. Rules: Use distance sensor to avoid obstacles, call avoid_obstacle Skill if object <200mm, respond to voice commands...</textarea>
+                    <div class="flex items-center justify-between mt-2 text-xs text-gray-500">
+                        <span>Character count: 247/1000</span>
+                        <span>Template: Explorer</span>
+                    </div>
+                </div>
+            </section>
+
+            <section id="inputs-section" class="px-4 pb-4">
+                <h3 class="text-base font-semibold text-gray-900 mb-3">Input Sources</h3>
+                <div class="space-y-3">
+                    <div class="bg-white rounded-2xl border border-gray-200 p-4 shadow-sm">
+                        <div class="flex items-center justify-between mb-3">
+                            <h4 class="text-sm font-semibold text-gray-900">📱 iPhone Sensors</h4>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-3">
+                                    <input type="checkbox" id="microphone-toggle" class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500" checked>
+                                    <div>
+                                        <div class="text-sm font-medium text-gray-900">🎤 Microphone</div>
+                                        <div class="text-xs text-gray-500">Voice commands</div>
+                                    </div>
+                                </div>
+                                <button class="text-xs text-blue-500">Test</button>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-3">
+                                    <input type="checkbox" id="camera-toggle" class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500" checked>
+                                    <div>
+                                        <div class="text-sm font-medium text-gray-900">📹 Camera</div>
+                                        <div class="text-xs text-gray-500">Visual navigation</div>
+                                    </div>
+                                </div>
+                                <button class="text-xs text-blue-500">Preview</button>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-3">
+                                    <input type="checkbox" id="speaker-toggle" class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500" checked>
+                                    <div>
+                                        <div class="text-sm font-medium text-gray-900">🔊 Speaker</div>
+                                        <div class="text-xs text-gray-500">AI voice responses</div>
+                                    </div>
+                                </div>
+                                <button class="text-xs text-blue-500">Test</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-2xl border border-gray-200 p-4 shadow-sm">
+                        <div class="flex items-center justify-between mb-3">
+                            <h4 class="text-sm font-semibold text-gray-900">🤖 LEGO Sensors</h4>
+                            <span class="text-xs text-gray-500">Tank Robot v2</span>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-3">
+                                    <input type="checkbox" id="distance-sensor-toggle" class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500" checked>
+                                    <div>
+                                        <div class="text-sm font-medium text-gray-900">Distance Sensor (Port D)</div>
+                                        <div class="text-xs text-gray-500">Range: 0-2000mm | Current: 340mm</div>
+                                    </div>
+                                </div>
+                                <button class="text-xs text-blue-500">Test</button>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-3">
+                                    <input type="checkbox" id="color-sensor-toggle" class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500" checked>
+                                    <div>
+                                        <div class="text-sm font-medium text-gray-900">Color Sensor (Port C)</div>
+                                        <div class="text-xs text-gray-500">Ground Scanner | Current: Blue</div>
+                                    </div>
+                                </div>
+                                <button class="text-xs text-blue-500">Test</button>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-3">
+                                    <input type="checkbox" id="hub-imu-toggle" class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500" checked>
+                                    <div>
+                                        <div class="text-sm font-medium text-gray-900">Hub IMU</div>
+                                        <div class="text-xs text-gray-500">Tilt, acceleration | 3-axis</div>
+                                    </div>
+                                </div>
+                                <button class="text-xs text-blue-500">Test</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="skills-section" class="px-4 pb-4">
+                <h3 class="text-base font-semibold text-gray-900 mb-3">Available Skills</h3>
+                <div class="bg-white rounded-2xl border border-gray-200 p-4 shadow-sm">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <input type="checkbox" class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500" checked>
+                                <div>
+                                    <div class="text-sm font-medium text-gray-900">drive_forward(speed, duration)</div>
+                                    <div class="text-xs text-gray-500">Drive robot forward</div>
+                                </div>
+                            </div>
+                            <button class="text-xs text-blue-500">Test</button>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <input type="checkbox" class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500" checked>
+                                <div>
+                                    <div class="text-sm font-medium text-gray-900">turn_left(angle)</div>
+                                    <div class="text-xs text-gray-500">Rotate left by degrees</div>
+                                </div>
+                            </div>
+                            <button class="text-xs text-blue-500">Test</button>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <input type="checkbox" class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500" checked>
+                                <div>
+                                    <div class="text-sm font-medium text-gray-900">turn_right(angle)</div>
+                                    <div class="text-xs text-gray-500">Rotate right by degrees</div>
+                                </div>
+                            </div>
+                            <button class="text-xs text-blue-500">Test</button>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <input type="checkbox" class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500" checked>
+                                <div>
+                                    <div class="text-sm font-medium text-gray-900">avoid_obstacle()</div>
+                                    <div class="text-xs text-gray-500">Detect and navigate around obstacles</div>
+                                </div>
+                            </div>
+                            <button class="text-xs text-blue-500">Test</button>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <input type="checkbox" class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500">
+                                <div>
+                                    <div class="text-sm font-medium text-gray-900">line_follower(speed, stop_color)</div>
+                                    <div class="text-xs text-gray-500">Follow line until stop color</div>
+                                </div>
+                            </div>
+                            <button class="text-xs text-blue-500">Test</button>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <input type="checkbox" class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500" checked>
+                                <div>
+                                    <div class="text-sm font-medium text-gray-900">read_distance()</div>
+                                    <div class="text-xs text-gray-500">Return distance sensor reading</div>
+                                </div>
+                            </div>
+                            <button class="text-xs text-blue-500">Test</button>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <input type="checkbox" class="w-4 h-4 text-blue-600 rounded focus:ring-blue-500" checked>
+                                <div>
+                                    <div class="text-sm font-medium text-gray-900">read_color()</div>
+                                    <div class="text-xs text-gray-500">Return color sensor reading</div>
+                                </div>
+                            </div>
+                            <button class="text-xs text-blue-500">Test</button>
+                        </div>
+                    </div>
+                </div>
+                <button id="upload-skills-button" class="mt-4 w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-xl flex items-center justify-center space-x-2 transition-colors">
+                    <i class="fa-solid fa-upload"></i>
+                    <span>Upload Selected Skills to Hub</span>
+                </button>
+            </section>
+        </main>
+
+        <footer id="footer" class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-3 max-w-md mx-auto">
+            <div class="flex items-center justify-around">
+                <button class="flex flex-col items-center space-y-1 text-gray-400" onclick="window.location.href = 'Home.html';">
+                    <i class="fa-solid fa-house text-xl"></i>
+                    <span class="text-xs font-medium">Home</span>
+                </button>
+                <button class="flex flex-col items-center space-y-1 text-gray-400" onclick="window.location.href = 'Builds.html';">
+                    <i class="fa-solid fa-cube text-xl"></i>
+                    <span class="text-xs font-medium">Builds</span>
+                </button>
+                <button class="flex flex-col items-center space-y-1 text-gray-400" onclick="window.location.href = 'Skills.html';">
+                    <i class="fa-solid fa-code text-xl"></i>
+                    <span class="text-xs font-medium">Skills</span>
+                </button>
+                <button class="flex flex-col items-center space-y-1 text-blue-500">
+                    <i class="fa-solid fa-robot text-xl"></i>
+                    <span class="text-xs font-medium">Robot</span>
+                </button>
+            </div>
+        </footer>
+
+        <div id="activity-log-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-end">
+            <div class="bg-white w-full max-w-md mx-auto rounded-t-3xl max-h-[80vh] flex flex-col">
+                <div class="flex items-center justify-between p-4 border-b border-gray-200">
+                    <h2 class="text-lg font-semibold text-gray-900">Activity Log</h2>
+                    <button id="close-activity-log" class="text-gray-500 text-xl">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                <div class="flex-1 overflow-y-auto p-4 space-y-4">
+                    <div class="flex items-start space-x-3">
+                        <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                            <i class="fa-solid fa-user text-blue-600 text-xs"></i>
+                        </div>
+                        <div class="flex-1">
+                            <div class="text-xs text-gray-500 mb-1">[12:34:56] USER</div>
+                            <div class="text-sm text-gray-900">"Start exploring"</div>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                        <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                            <i class="fa-solid fa-robot text-green-600 text-xs"></i>
+                        </div>
+                        <div class="flex-1">
+                            <div class="text-xs text-gray-500 mb-1">[12:34:57] GEMINI (Audio)</div>
+                            <div class="text-sm text-gray-900">"Beginning exploration. I see a clear path ahead with good lighting."</div>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                        <div class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                            <i class="fa-solid fa-eye text-purple-600 text-xs"></i>
+                        </div>
+                        <div class="flex-1">
+                            <div class="text-xs text-gray-500 mb-1">[12:34:58] GEMINI (Vision)</div>
+                            <div class="text-sm text-gray-900">"Detecting: floor (wood), wall (white), doorway visible on right"</div>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                        <div class="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center flex-shrink-0">
+                            <i class="fa-solid fa-chart-bar text-yellow-600 text-xs"></i>
+                        </div>
+                        <div class="flex-1">
+                            <div class="text-xs text-gray-500 mb-1">[12:34:58] SENSORS</div>
+                            <div class="text-sm text-gray-900">Distance: 850mm | Color: BLUE | Tilt: 0°</div>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                        <div class="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
+                            <i class="fa-solid fa-cog text-orange-600 text-xs"></i>
+                        </div>
+                        <div class="flex-1">
+                            <div class="text-xs text-gray-500 mb-1">[12:34:59] FUNCTION CALL</div>
+                            <div class="text-sm text-gray-900">drive_forward(speed=200, duration=1000)</div>
+                            <div class="text-xs text-gray-500 mt-1">└─ Status: Executing...</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-4 border-t border-gray-200">
+                    <button class="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-xl flex items-center justify-center space-x-2 transition-colors">
+                        <i class="fa-solid fa-download"></i>
+                        <span>Export Log</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="templates-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-end">
+            <div class="bg-white w-full max-w-md mx-auto rounded-t-3xl max-h-[80vh] flex flex-col">
+                <div class="flex items-center justify-between p-4 border-b border-gray-200">
+                    <h2 class="text-lg font-semibold text-gray-900">Instruction Templates</h2>
+                    <button id="close-templates" class="text-gray-500 text-xl">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                <div class="flex-1 overflow-y-auto p-4 space-y-3">
+                    <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-4 border-2 border-blue-200 cursor-pointer hover:border-blue-300 transition-colors" data-template="explorer">
+                        <h3 class="text-sm font-semibold text-blue-900 mb-1">🔍 Explorer</h3>
+                        <p class="text-xs text-blue-700">Autonomous navigation with obstacle avoidance and environmental documentation</p>
+                    </div>
+                    <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-4 border-2 border-green-200 cursor-pointer hover:border-green-300 transition-colors" data-template="assistant">
+                        <h3 class="text-sm font-semibold text-green-900 mb-1">🤝 Voice Assistant</h3>
+                        <p class="text-xs text-green-700">Follow voice commands precisely with safety confirmations</p>
+                    </div>
+                    <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl p-4 border-2 border-purple-200 cursor-pointer hover:border-purple-300 transition-colors" data-template="line-follower">
+                        <h3 class="text-sm font-semibold text-purple-900 mb-1">📍 Line Follower</h3>
+                        <p class="text-xs text-purple-700">Precise line tracking with smooth curve handling</p>
+                    </div>
+                    <div class="bg-gradient-to-br from-red-50 to-red-100 rounded-xl p-4 border-2 border-red-200 cursor-pointer hover:border-red-300 transition-colors" data-template="sumo">
+                        <h3 class="text-sm font-semibold text-red-900 mb-1">⚔️ Sumo Bot</h3>
+                        <p class="text-xs text-red-700">Competitive robot for sumo wrestling competitions</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="confirmation-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+            <div class="bg-white w-80 rounded-2xl p-6 mx-4">
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fa-solid fa-triangle-exclamation text-yellow-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2">Start Autonomous Robot?</h3>
+                    <p class="text-sm text-gray-600 mb-6">Robot will operate autonomously using AI. Ensure area is safe and clear of obstacles.</p>
+                    <div class="flex space-x-3">
+                        <button id="cancel-start" class="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-900 font-semibold py-3 rounded-xl transition-colors">Cancel</button>
+                        <button id="confirm-start" class="flex-1 bg-green-500 hover:bg-green-600 text-white font-semibold py-3 rounded-xl transition-colors">Start Robot</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="Robot.js"></script>
+</body>
+</html>

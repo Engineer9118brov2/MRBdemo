@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script> window.FontAwesomeConfig = { autoReplaceSvg: 'nest'};</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="Home.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50">
+    <div id="main-container" class="max-w-md mx-auto bg-white min-h-screen">
+        <header id="header" class="bg-white border-b border-gray-200 sticky top-0 z-10">
+            <div class="px-4 py-3 flex items-center justify-between">
+                <h1 class="text-lg font-semibold text-gray-900">Home</h1>
+                <button id="logs-button" class="text-blue-500 text-base">
+                    <i class="fa-solid fa-file-lines"></i>
+                </button>
+            </div>
+        </header>
+
+        <main id="main-content" class="pb-24">
+            <section id="hub-connection-section" class="px-4 pt-6 pb-4">
+                <div id="hub-status-card" class="bg-white rounded-2xl border border-gray-200 p-5 shadow-sm">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center">
+                                <i class="fa-solid fa-cube text-white text-xl"></i>
+                            </div>
+                            <div>
+                                <h2 class="text-base font-semibold text-gray-900">SPIKE Prime Hub</h2>
+                                <div class="flex items-center space-x-1 mt-0.5">
+                                    <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                                    <span class="text-sm font-medium text-green-600">Connected</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button id="scan-button" class="w-10 h-10 bg-blue-500 hover:bg-blue-600 active:bg-blue-700 text-white rounded-xl flex items-center justify-center transition-colors">
+                            <i class="fa-solid fa-rotate text-lg"></i>
+                        </button>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div id="battery-info" class="bg-gray-50 rounded-xl p-3">
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="text-xs font-medium text-gray-500">Battery</span>
+                                <i class="fa-solid fa-battery-three-quarters text-green-500 text-base"></i>
+                            </div>
+                            <p class="text-lg font-bold text-gray-900">87%</p>
+                            <p class="text-xs text-gray-500">8.4V</p>
+                        </div>
+                        <div id="signal-info" class="bg-gray-50 rounded-xl p-3">
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="text-xs font-medium text-gray-500">Signal</span>
+                                <i class="fa-solid fa-signal text-blue-500 text-base"></i>
+                            </div>
+                            <p class="text-lg font-bold text-gray-900">Strong</p>
+                            <p class="text-xs text-gray-500">-45 dBm</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="devices-section" class="px-4 pb-4">
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="text-base font-semibold text-gray-900">Connected Devices</h3>
+                    <span class="text-sm text-gray-500">6 Ports</span>
+                </div>
+                <div id="device-grid" class="grid grid-cols-2 gap-3">
+                    <div id="port-a-card" class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-4 border-2 border-blue-200 active:scale-95 transition-transform cursor-pointer">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-2xl font-bold text-blue-600">A</span>
+                            <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                        </div>
+                        <div class="w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center mb-2">
+                            <i class="fa-solid fa-cog text-white text-lg"></i>
+                        </div>
+                        <p class="text-sm font-semibold text-gray-900">Large Motor</p>
+                        <p class="text-xs text-blue-600 font-medium mt-1">Left Wheel</p>
+                        <div class="mt-2 pt-2 border-t border-blue-200">
+                            <div class="flex justify-between text-xs">
+                                <span class="text-gray-600">Speed:</span>
+                                <span class="font-medium text-gray-900">75%</span>
+                            </div>
+                            <div class="flex justify-between text-xs mt-1">
+                                <span class="text-gray-600">Position:</span>
+                                <span class="font-medium text-gray-900">1840°</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="port-b-card" class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-4 border-2 border-blue-200 active:scale-95 transition-transform cursor-pointer">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-2xl font-bold text-blue-600">B</span>
+                            <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                        </div>
+                        <div class="w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center mb-2">
+                            <i class="fa-solid fa-cog text-white text-lg"></i>
+                        </div>
+                        <p class="text-sm font-semibold text-gray-900">Large Motor</p>
+                        <p class="text-xs text-blue-600 font-medium mt-1">Right Wheel</p>
+                        <div class="mt-2 pt-2 border-t border-blue-200">
+                            <div class="flex justify-between text-xs">
+                                <span class="text-gray-600">Speed:</span>
+                                <span class="font-medium text-gray-900">75%</span>
+                            </div>
+                            <div class="flex justify-between text-xs mt-1">
+                                <span class="text-gray-600">Position:</span>
+                                <span class="font-medium text-gray-900">1835°</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="port-c-card" class="bg-gradient-to-br from-green-50 to-green-100 rounded-2xl p-4 border-2 border-green-200 active:scale-95 transition-transform cursor-pointer">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-2xl font-bold text-green-600">C</span>
+                            <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                        </div>
+                        <div class="w-10 h-10 bg-green-500 rounded-xl flex items-center justify-center mb-2">
+                            <i class="fa-solid fa-eye text-white text-lg"></i>
+                        </div>
+                        <p class="text-sm font-semibold text-gray-900">Color Sensor</p>
+                        <p class="text-xs text-green-600 font-medium mt-1">Front Sensor</p>
+                        <div class="mt-2 pt-2 border-t border-green-200">
+                            <div class="flex justify-between text-xs">
+                                <span class="text-gray-600">Color:</span>
+                                <span class="font-medium text-gray-900">Blue</span>
+                            </div>
+                            <div class="flex justify-between text-xs mt-1">
+                                <span class="text-gray-600">Ambient:</span>
+                                <span class="font-medium text-gray-900">45%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="port-d-card" class="bg-gradient-to-br from-green-50 to-green-100 rounded-2xl p-4 border-2 border-green-200 active:scale-95 transition-transform cursor-pointer">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-2xl font-bold text-green-600">D</span>
+                            <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+                        </div>
+                        <div class="w-10 h-10 bg-green-500 rounded-xl flex items-center justify-center mb-2">
+                            <i class="fa-solid fa-ruler text-white text-lg"></i>
+                        </div>
+                        <p class="text-sm font-semibold text-gray-900">Distance Sensor</p>
+                        <p class="text-xs text-green-600 font-medium mt-1">—</p>
+                        <div class="mt-2 pt-2 border-t border-green-200">
+                            <div class="flex justify-between text-xs">
+                                <span class="text-gray-600">Distance:</span>
+                                <span class="font-medium text-gray-900">12 cm</span>
+                            </div>
+                            <div class="flex justify-between text-xs mt-1">
+                                <span class="text-gray-600">Range:</span>
+                                <span class="font-medium text-gray-900">0-200 cm</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="port-e-card" class="bg-white rounded-2xl p-4 border-2 border-dashed border-gray-300 active:scale-95 transition-transform cursor-pointer">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-2xl font-bold text-gray-400">E</span>
+                            <div class="w-2 h-2 bg-red-500 rounded-full"></div>
+                        </div>
+                        <div class="w-10 h-10 bg-gray-200 rounded-xl flex items-center justify-center mb-2">
+                            <i class="fa-solid fa-ban text-gray-400 text-lg"></i>
+                        </div>
+                        <p class="text-sm font-semibold text-gray-900">No Device</p>
+                        <p class="text-xs text-gray-500 font-medium mt-1">—</p>
+                        <div class="mt-2 pt-2 border-t border-gray-200">
+                            <div class="flex justify-between text-xs">
+                                <span class="text-gray-600">Status:</span>
+                                <span class="font-medium text-gray-900">Empty</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="port-f-card" class="bg-white rounded-2xl p-4 border-2 border-dashed border-gray-300 active:scale-95 transition-transform cursor-pointer">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-2xl font-bold text-gray-400">F</span>
+                            <div class="w-2 h-2 bg-red-500 rounded-full"></div>
+                        </div>
+                        <div class="w-10 h-10 bg-gray-200 rounded-xl flex items-center justify-center mb-2">
+                            <i class="fa-solid fa-ban text-gray-400 text-lg"></i>
+                        </div>
+                        <p class="text-sm font-semibold text-gray-900">No Device</p>
+                        <p class="text-xs text-gray-500 font-medium mt-1">—</p>
+                        <div class="mt-2 pt-2 border-t border-gray-200">
+                            <div class="flex justify-between text-xs">
+                                <span class="text-gray-600">Status:</span>
+                                <span class="font-medium text-gray-900">Empty</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="actions-section" class="px-4 pb-4">
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="text-base font-semibold text-gray-900">Actions</h3>
+                </div>
+                <div class="space-y-3">
+                    <button id="test-all-button" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-4 rounded-2xl flex items-center justify-center space-x-2 transition-colors shadow-sm active:scale-98">
+                        <i class="fa-solid fa-play"></i>
+                        <span>Test All Devices</span>
+                    </button>
+                    <button id="save-build-button" class="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-4 rounded-2xl flex items-center justify-center space-x-2 transition-colors shadow-sm active:scale-98">
+                        <i class="fa-solid fa-save"></i>
+                        <span>Save as Build</span>
+                    </button>
+                </div>
+            </section>
+        </main>
+
+        <footer id="footer" class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-3 max-w-md mx-auto">
+            <div class="flex items-center justify-around">
+                <button class="flex flex-col items-center space-y-1 text-blue-500">
+                    <i class="fa-solid fa-house text-xl"></i>
+                    <span class="text-xs font-medium">Home</span>
+                </button>
+                <button class="flex flex-col items-center space-y-1 text-gray-400">
+                    <i class="fa-solid fa-cube text-xl"></i>
+                    <span class="text-xs font-medium">Builds</span>
+                </button>
+                <button class="flex flex-col items-center space-y-1 text-gray-400">
+                    <i class="fa-solid fa-code text-xl"></i>
+                    <span class="text-xs font-medium">Skills</span>
+                </button>
+                <button class="flex flex-col items-center space-y-1 text-gray-400">
+                    <i class="fa-solid fa-robot text-xl"></i>
+                    <span class="text-xs font-medium">Robot</span>
+                </button>
+            </div>
+        </footer>
+
+        <div id="logs-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-end">
+            <div class="bg-white w-full max-w-md mx-auto rounded-t-3xl max-h-[80vh] flex flex-col">
+                <div class="flex items-center justify-between p-4 border-b border-gray-200">
+                    <h2 class="text-lg font-semibold text-gray-900">Application Logs</h2>
+                    <button id="close-logs" class="text-gray-500 text-xl">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                <div id="logs-content" class="flex-1 overflow-y-auto p-4 space-y-2 font-mono text-xs text-gray-600">
+                    <div>[12:34:56] <span class="text-green-600">INFO</span> Hub connected successfully</div>
+                    <div>[12:35:01] <span class="text-blue-600">DEBUG</span> Device scan initiated</div>
+                    <div>[12:35:02] <span class="text-green-600">INFO</span> Port A: Large Motor detected</div>
+                    <div>[12:35:02] <span class="text-green-600">INFO</span> Port B: Large Motor detected</div>
+                    <div>[12:35:03] <span class="text-green-600">INFO</span> Port C: Color Sensor detected</div>
+                    <div>[12:35:03] <span class="text-green-600">INFO</span> Port D: Distance Sensor detected</div>
+                    <div>[12:35:10] <span class="text-blue-600">DEBUG</span> Battery: 87% (8.4V)</div>
+                    <div>[12:35:15] <span class="text-blue-600">DEBUG</span> Signal strength: -45 dBm</div>
+                    <div>[12:35:20] <span class="text-green-600">INFO</span> Connection quality: Excellent</div>
+                </div>
+                <div class="p-4 border-t border-gray-200">
+                    <button id="export-logs-button" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-xl flex items-center justify-center space-x-2 transition-colors">
+                        <i class="fa-solid fa-download"></i>
+                        <span>Export Logs</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="device-test-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-end">
+            <div class="bg-white w-full max-w-md mx-auto rounded-t-3xl max-h-[85vh] flex flex-col">
+                <div class="flex items-center justify-between p-4 border-b border-gray-200">
+                    <div>
+                        <h2 class="text-lg font-semibold text-gray-900" id="test-modal-title">Test Device</h2>
+                        <p class="text-sm text-gray-500" id="test-modal-subtitle">Port A - Large Motor</p>
+                    </div>
+                    <button id="close-test-modal" class="text-gray-500 text-xl">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                <div class="flex-1 overflow-y-auto">
+                    <div id="visual-output-section" class="p-4 bg-gradient-to-br from-blue-50 to-blue-100">
+                        <h3 class="text-sm font-semibold text-gray-900 mb-3">Visual Output</h3>
+                        <div id="motor-visual" class="bg-white rounded-xl p-4 space-y-3">
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm font-medium text-gray-700">Direction</span>
+                                <div class="flex items-center space-x-2">
+                                    <i class="fa-solid fa-arrow-rotate-right text-blue-500 text-xl"></i>
+                                    <span class="text-sm font-semibold text-gray-900">Clockwise</span>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex items-center justify-between mb-1">
+                                    <span class="text-sm font-medium text-gray-700">Speed</span>
+                                    <span class="text-sm font-semibold text-gray-900">750 deg/s</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="bg-blue-500 h-2 rounded-full" style="width: 50%"></div>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm font-medium text-gray-700">Position</span>
+                                <span class="text-sm font-semibold text-gray-900">1840°</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm font-medium text-gray-700">Status</span>
+                                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">
+                                    <div class="w-1.5 h-1.5 bg-green-500 rounded-full mr-1"></div>
+                                    Running
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="console-output-section" class="p-4">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-sm font-semibold text-gray-900">Console Output</h3>
+                            <button id="toggle-console" class="text-xs text-blue-500 font-medium">
+                                <i class="fa-solid fa-chevron-down"></i>
+                            </button>
+                        </div>
+                        <div id="console-content" class="bg-gray-900 rounded-xl p-3 font-mono text-xs text-green-400 space-y-1 max-h-48 overflow-y-auto">
+                            <div>>>> Testing Motor A...</div>
+                            <div>>>> Speed: 750 deg/s</div>
+                            <div>>>> Position: 1840°</div>
+                            <div>>>> Direction: Clockwise</div>
+                            <div>>>> Status: Running</div>
+                        </div>
+                    </div>
+                    <div id="test-controls-section" class="p-4 space-y-2">
+                        <button class="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-xl flex items-center justify-center space-x-2 transition-colors">
+                            <i class="fa-solid fa-play"></i>
+                            <span>Run Quick Test</span>
+                        </button>
+                        <button class="w-full bg-white border-2 border-gray-200 hover:border-blue-300 hover:bg-blue-50 text-gray-900 font-semibold py-3 rounded-xl flex items-center justify-center space-x-2 transition-all">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i>
+                            <span>AI Custom Test</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="Home.js"></script>
+</body>
+</html>

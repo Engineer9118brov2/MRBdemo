@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Build Editor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script> window.FontAwesomeConfig = { autoReplaceSvg: 'nest'};</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="BuildEditor.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#2563eb',
+                        secondary: '#64748b',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 font-sans">
+    <div class="max-w-md mx-auto bg-white min-h-screen">
+        <header id="header" class="bg-white border-b border-gray-200 sticky top-0 z-50">
+            <div class="px-4 py-3 flex items-center justify-between">
+                <button id="back-button" class="w-10 h-10 flex items-center justify-center rounded-lg hover:bg-gray-100">
+                    <i class="fa-solid fa-arrow-left text-gray-700 text-lg"></i>
+                </button>
+                <h1 class="text-lg font-semibold text-gray-900">Build Editor</h1>
+                <button id="save-build" class="text-primary font-semibold text-base px-4 py-2 rounded-lg hover:bg-blue-50 active:bg-blue-100 transition-colors">Save</button>
+            </div>
+        </header>
+        <main id="main-content" class="pb-24">
+            <section id="build-info-section" class="p-4 bg-white border-b border-gray-200">
+                <div class="flex items-center justify-between mb-3">
+                    <h2 class="text-sm font-semibold text-gray-900">Build Information</h2>
+                </div>
+                <div id="build-info-display" class="space-y-4">
+                    <div>
+                        <label class="text-xs font-medium text-gray-500 block mb-1">Build Name</label>
+                        <input id="build-name" type="text" class="w-full bg-gray-50 border border-gray-300 rounded-lg px-3 py-2.5 text-sm text-gray-900 focus:ring-2 focus:ring-primary focus:border-primary outline-none transition">
+                    </div>
+                    <div>
+                        <label class="text-xs font-medium text-gray-500 block mb-1">Description</label>
+                        <textarea id="build-description" rows="3" class="w-full bg-gray-50 border border-gray-300 rounded-lg px-3 py-2.5 text-sm text-gray-700 leading-relaxed resize-none focus:ring-2 focus:ring-primary focus:border-primary outline-none transition"></textarea>
+                    </div>
+                </div>
+                <div id="build-photos" class="mt-4">
+                    <div class="flex items-center justify-between mb-3">
+                        <label class="text-xs font-medium text-gray-500">Build Photos</label>
+                    </div>
+                    <div id="photos-grid" class="grid grid-cols-3 gap-2">
+                        <div class="relative aspect-square rounded-lg overflow-hidden bg-gray-100 border border-gray-200">
+                            <img id="photo-1" class="w-full h-full object-cover" src="" alt="" />
+                            <button class="absolute top-1 right-1 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center shadow-lg"><i class="fa-solid fa-xmark text-white text-xs"></i></button>
+                        </div>
+                        <div class="relative aspect-square rounded-lg overflow-hidden bg-gray-100 border border-gray-200">
+                            <img id="photo-2" class="w-full h-full object-cover" src="" alt="" />
+                            <button class="absolute top-1 right-1 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center shadow-lg"><i class="fa-solid fa-xmark text-white text-xs"></i></button>
+                        </div>
+                        <button class="aspect-square rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center bg-gray-50 active:scale-95 transition-transform">
+                            <i class="fa-solid fa-plus text-gray-400 text-xl"></i>
+                        </button>
+                    </div>
+                </div>
+            </section>
+            <section id="detection-section" class="p-4 bg-white border-b border-gray-200">
+                <div class="mb-4">
+                    <h2 class="text-sm font-semibold text-gray-900 mb-2">Device Configuration</h2>
+                    <p class="text-xs text-gray-500">Map physical devices to hub ports</p>
+                </div>
+                <div id="detection-options" class="space-y-3">
+                    <button id="auto-detect-btn" class="w-full bg-primary text-white rounded-xl py-3.5 px-4 flex items-center justify-center gap-3 shadow-sm active:scale-98 transition-transform">
+                        <i class="fa-solid fa-wand-magic-sparkles text-lg"></i>
+                        <span class="font-semibold">Auto-Detect Devices</span>
+                    </button>
+                    <button id="manual-add-btn" class="w-full bg-white border-2 border-gray-200 text-gray-700 rounded-xl py-3.5 px-4 flex items-center justify-center gap-3 active:scale-98 transition-transform">
+                        <i class="fa-solid fa-plus text-lg"></i>
+                        <span class="font-semibold">Add Device Manually</span>
+                    </button>
+                </div>
+                <div id="status-message" class="mt-4 bg-blue-50 border border-blue-200 rounded-lg p-3 flex items-start gap-3">
+                    <i class="fa-solid fa-circle-info text-blue-500 text-sm mt-0.5"></i>
+                    <p class="text-xs text-blue-700">Connect your hub to automatically detect all connected devices</p>
+                </div>
+            </section>
+            <section id="devices-list" class="p-4">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-sm font-semibold text-gray-900">Connected Devices</h3>
+                    <span class="text-xs font-medium text-gray-500 bg-gray-100 px-2.5 py-1 rounded-full">0 devices</span>
+                </div>
+                <div id="device-cards" class="space-y-3">
+                    <!-- Dynamic devices will be appended here -->
+                </div>
+                <div id="empty-ports" class="mt-6">
+                    <h3 class="text-sm font-semibold text-gray-900 mb-3">Available Ports</h3>
+                    <div class="grid grid-cols-3 gap-2">
+                        <button class="bg-white border-2 border-dashed border-gray-200 rounded-lg py-4 flex flex-col items-center justify-center gap-2 active:scale-95 transition-transform">
+                            <div class="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center">
+                                <span class="text-gray-400 font-semibold text-xs">D</span>
+                            </div>
+                            <span class="text-xs text-gray-400 font-medium">Empty</span>
+                        </button>
+                        <button class="bg-white border-2 border-dashed border-gray-200 rounded-lg py-4 flex flex-col items-center justify-center gap-2 active:scale-95 transition-transform">
+                            <div class="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center">
+                                <span class="text-gray-400 font-semibold text-xs">E</span>
+                            </div>
+                            <span class="text-xs text-gray-400 font-medium">Empty</span>
+                        </button>
+                        <button class="bg-white border-2 border-dashed border-gray-200 rounded-lg py-4 flex flex-col items-center justify-center gap-2 active:scale-95 transition-transform">
+                            <div class="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center">
+                                <span class="text-gray-400 font-semibold text-xs">F</span>
+                            </div>
+                            <span class="text-xs text-gray-400 font-medium">Empty</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <div id="bottom-sheet" class="fixed inset-x-0 bottom-0 bg-white border-t border-gray-200 px-4 py-4 shadow-2xl hidden z-50">
+            <div class="max-w-md mx-auto">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-base font-semibold text-gray-900">Add Device</h3>
+                    <button id="close-sheet-btn" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-gray-100">
+                        <i class="fa-solid fa-xmark text-gray-500"></i>
+                    </button>
+                </div>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-medium text-gray-700 mb-2">Port</label>
+                        <select id="new-port" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2.5 text-sm text-gray-900">
+                            <option>Port A</option>
+                            <option>Port B</option>
+                            <option>Port C</option>
+                            <option>Port D</option>
+                            <option>Port E</option>
+                            <option>Port F</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-700 mb-2">Device Type</label>
+                        <select id="new-type" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2.5 text-sm text-gray-900">
+                            <option>Motor</option>
+                            <option>Color Sensor</option>
+                            <option>Distance Sensor</option>
+                            <option>Force Sensor</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-700 mb-2">Custom Name</label>
+                        <input id="new-name" type="text" placeholder="e.g., Left Wheel" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2.5 text-sm text-gray-900 placeholder-gray-400">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-700 mb-2">Notes</label>
+                        <textarea id="new-notes" rows="3" placeholder="Important details for AI coding..." class="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2.5 text-sm text-gray-900 placeholder-gray-400 resize-none"></textarea>
+                    </div>
+                    <button id="add-device" class="w-full bg-primary text-white rounded-xl py-3 font-semibold active:scale-98 transition-transform">
+                        Add Device
+                    </button>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
