@@ -41,6 +41,16 @@ document.getElementById('export-json').addEventListener('click', function() {
     buildMenuModal.classList.add('hidden');
 });
 
+// Open in Pybricks
+document.getElementById('open-pybricks').addEventListener('click', function() {
+    window.location.href = 'Skills.html';
+});
+
+// Test Build
+document.getElementById('test-build').addEventListener('click', function() {
+    alert('Testing build... (demo)');
+});
+
 // Render selected build details from localStorage on load
 window.addEventListener('load', function() {
     if (selectedIndex !== null) {

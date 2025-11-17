@@ -121,3 +121,26 @@ function renderBuilds() {
 
 // Initial render
 window.addEventListener('load', renderBuilds);
+
+// Marketplace download buttons
+document.querySelectorAll('.download-button').forEach(button => {
+    button.addEventListener('click', function() {
+        const marketplaceCard = this.closest('[id^="marketplace-build-"]');
+        const name = marketplaceCard.querySelector('h4').textContent;
+        const description = marketplaceCard.querySelector('p.line-clamp-2').textContent;
+        const photo = marketplaceCard.querySelector('img').src;
+        const motors = marketplaceCard.querySelector('.text-xs.font-medium.text-gray-700:first-of-type').textContent.split(' ')[0];
+        const sensors = marketplaceCard.querySelector('.text-xs.font-medium.text-gray-700:last-of-type').textContent.split(' ')[0];
+        // Demo ports for marketplace builds
+        const ports = [
+            { port: 'A', name: 'Left Wheel', type: 'Large Angular Motor', notes: 'Counter-clockwise = forward' },
+            { port: 'B', name: 'Right Wheel', type: 'Large Angular Motor', notes: 'Clockwise = forward' },
+            { port: 'C', name: 'Ground Scanner', type: 'Color Sensor', notes: '13mm height optimal' }
+        ];
+        let builds = JSON.parse(localStorage.getItem('builds') || '[]');
+        builds.push({ name, description, photo, motors, sensors, ports });
+        localStorage.setItem('builds', JSON.stringify(builds));
+        renderBuilds();
+        alert('Downloaded and added to My Builds');
+    });
+});
