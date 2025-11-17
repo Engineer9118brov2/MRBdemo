@@ -111,60 +111,65 @@ document.getElementById('save-build').addEventListener('click', function() {
     }
     localStorage.setItem('builds', JSON.stringify(builds));
     localStorage.removeItem('editBuildIndex');
+    localStorage.removeItem('prepopulateBuild');
     window.location.href = 'Builds.html';
 });
 
-// Load for edit mode if applicable
+// Load for edit mode or prepopulate if applicable
 window.addEventListener('load', function() {
     const editIndex = localStorage.getItem('editBuildIndex');
+    const prepopulate = JSON.parse(localStorage.getItem('prepopulateBuild'));
     const deviceCards = document.getElementById('device-cards');
     deviceCards.innerHTML = '';
+    let build;
     if (editIndex !== null) {
         let builds = JSON.parse(localStorage.getItem('builds') || '[]');
-        const build = builds[editIndex];
-        if (build) {
-            document.getElementById('build-name').value = build.name;
-            document.getElementById('build-description').value = build.description;
-            if (build.photo) document.getElementById('photo-1').src = build.photo;
-            build.ports.forEach((port, index) => {
-                const card = document.createElement('div');
-                card.id = `device-card-${index + 1}`;
-                card.className = 'bg-white rounded-xl border border-gray-200 overflow-hidden';
-                card.innerHTML = `
-                    <div class="p-4">
-                        <div class="flex items-start justify-between mb-3">
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                                    <span class="text-blue-600 font-bold text-sm">${port.port}</span>
-                                </div>
-                                <div>
-                                    <input type="text" value="${port.name}" class="text-sm font-semibold text-gray-900 bg-transparent w-full border-b border-transparent focus:border-gray-300 focus:outline-none">
-                                    <p class="text-xs text-gray-500">${port.type}</p>
-                                </div>
+        build = builds[editIndex];
+    } else if (prepopulate) {
+        build = prepopulate;
+    }
+    if (build) {
+        document.getElementById('build-name').value = build.name;
+        document.getElementById('build-description').value = build.description;
+        if (build.photo) document.getElementById('photo-1').src = build.photo;
+        build.ports.forEach((port, index) => {
+            const card = document.createElement('div');
+            card.id = `device-card-${index + 1}`;
+            card.className = 'bg-white rounded-xl border border-gray-200 overflow-hidden';
+            card.innerHTML = `
+                <div class="p-4">
+                    <div class="flex items-start justify-between mb-3">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                                <span class="text-blue-600 font-bold text-sm">${port.port}</span>
                             </div>
-                        </div>
-                        <div class="space-y-2">
-                            <div class="flex items-center gap-2">
-                                <i class="fa-solid fa-plug text-gray-400 text-xs w-4"></i>
-                                <span class="text-xs text-gray-600">Port ${port.port}</span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <i class="fa-solid fa-microchip text-gray-400 text-xs w-4"></i>
-                                <span class="text-xs text-gray-600">${port.type}</span>
-                            </div>
-                        </div>
-                        <div class="mt-3 pt-3 border-t border-gray-100">
-                            <div class="flex items-center gap-2">
-                                <i class="fa-solid fa-circle-info text-amber-500 text-xs mt-0.5"></i>
-                                <input type="text" value="${port.notes}" class="text-xs text-gray-600 leading-relaxed bg-transparent w-full border-b border-transparent focus:border-gray-300 focus:outline-none">
+                            <div>
+                                <input type="text" value="${port.name}" class="text-sm font-semibold text-gray-900 bg-transparent w-full border-b border-transparent focus:border-gray-300 focus:outline-none">
+                                <p class="text-xs text-gray-500">${port.type}</p>
                             </div>
                         </div>
                     </div>
-                `;
-                deviceCards.appendChild(card);
-            });
-            document.getElementById('device-count').textContent = `${build.ports.length} devices`;
-        }
+                    <div class="space-y-2">
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-plug text-gray-400 text-xs w-4"></i>
+                            <span class="text-xs text-gray-600">Port ${port.port}</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-microchip text-gray-400 text-xs w-4"></i>
+                            <span class="text-xs text-gray-600">${port.type}</span>
+                        </div>
+                    </div>
+                    <div class="mt-3 pt-3 border-t border-gray-100">
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-circle-info text-amber-500 text-xs mt-0.5"></i>
+                            <input type="text" value="${port.notes}" class="text-xs text-gray-600 leading-relaxed bg-transparent w-full border-b border-transparent focus:border-gray-300 focus:outline-none">
+                        </div>
+                    </div>
+                </div>
+            `;
+            deviceCards.appendChild(card);
+        });
+        document.getElementById('device-count').textContent = `${build.ports.length} devices`;
     } else {
         // New mode defaults - empty
         document.getElementById('build-name').value = '';

@@ -230,15 +230,15 @@
                     <i class="fa-solid fa-house text-xl"></i>
                     <span class="text-xs font-medium">Home</span>
                 </button>
-                <button class="flex flex-col items-center space-y-1 text-gray-400">
+                <button class="flex flex-col items-center space-y-1 text-gray-400" onclick="window.location.href = 'Builds.html';">
                     <i class="fa-solid fa-cube text-xl"></i>
                     <span class="text-xs font-medium">Builds</span>
                 </button>
-                <button class="flex flex-col items-center space-y-1 text-gray-400">
+                <button class="flex flex-col items-center space-y-1 text-gray-400" onclick="window.location.href = 'Skills.html';">
                     <i class="fa-solid fa-code text-xl"></i>
                     <span class="text-xs font-medium">Skills</span>
                 </button>
-                <button class="flex flex-col items-center space-y-1 text-gray-400">
+                <button class="flex flex-col items-center space-y-1 text-gray-400" onclick="window.location.href = 'Robot.html';">
                     <i class="fa-solid fa-robot text-xl"></i>
                     <span class="text-xs font-medium">Robot</span>
                 </button>
@@ -287,34 +287,8 @@
                 <div class="flex-1 overflow-y-auto">
                     <div id="visual-output-section" class="p-4 bg-gradient-to-br from-blue-50 to-blue-100">
                         <h3 class="text-sm font-semibold text-gray-900 mb-3">Visual Output</h3>
-                        <div id="motor-visual" class="bg-white rounded-xl p-4 space-y-3">
-                            <div class="flex items-center justify-between">
-                                <span class="text-sm font-medium text-gray-700">Direction</span>
-                                <div class="flex items-center space-x-2">
-                                    <i class="fa-solid fa-arrow-rotate-right text-blue-500 text-xl"></i>
-                                    <span class="text-sm font-semibold text-gray-900">Clockwise</span>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="flex items-center justify-between mb-1">
-                                    <span class="text-sm font-medium text-gray-700">Speed</span>
-                                    <span class="text-sm font-semibold text-gray-900">750 deg/s</span>
-                                </div>
-                                <div class="w-full bg-gray-200 rounded-full h-2">
-                                    <div class="bg-blue-500 h-2 rounded-full" style="width: 50%"></div>
-                                </div>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <span class="text-sm font-medium text-gray-700">Position</span>
-                                <span class="text-sm font-semibold text-gray-900">1840°</span>
-                            </div>
-                            <div class="flex items-center justify-between">
-                                <span class="text-sm font-medium text-gray-700">Status</span>
-                                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">
-                                    <div class="w-1.5 h-1.5 bg-green-500 rounded-full mr-1"></div>
-                                    Running
-                                </span>
-                            </div>
+                        <div id="visual-content" class="bg-white rounded-xl p-4 space-y-3">
+                            <!-- Dynamic content here -->
                         </div>
                     </div>
                     <div id="console-output-section" class="p-4">
@@ -325,11 +299,7 @@
                             </button>
                         </div>
                         <div id="console-content" class="bg-gray-900 rounded-xl p-3 font-mono text-xs text-green-400 space-y-1 max-h-48 overflow-y-auto">
-                            <div>>>> Testing Motor A...</div>
-                            <div>>>> Speed: 750 deg/s</div>
-                            <div>>>> Position: 1840°</div>
-                            <div>>>> Direction: Clockwise</div>
-                            <div>>>> Status: Running</div>
+                            <!-- Dynamic content here -->
                         </div>
                     </div>
                     <div id="test-controls-section" class="p-4 space-y-2">
